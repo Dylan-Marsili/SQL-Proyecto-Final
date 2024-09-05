@@ -1,0 +1,27 @@
+
+networks:
+  app-network-public:
+    driver: bridge
+
+volumes:
+  sql-server-data:
+    driver: local
+  sqldata:
+  sqllog:
+  sqlbackup:
+
+services:
+  db:
+    image: mysql:latest
+    container_name: db-sqlserver
+    networks:
+      - app-network-public
+    restart: always
+    ports:
+      - '1433:1433'
+    volumes:
+      - sql-server-data:/var/opt/mssql/
+      - sqldata:/var/opt/sqlserver/data
+      - sqllog:/var/opt/sqlserver/log
+      - sqlbackup:/var/opt/sqlserver/backup
+      - /c/docker/shared:/usr/shared
